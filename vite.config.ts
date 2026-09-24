@@ -8,6 +8,12 @@ import { bunny } from 'laravel-vite-plugin/fonts';
 import { defineConfig, lazyPlugins } from 'vite-plus';
 
 export default defineConfig({
+    test: {
+        environment: 'jsdom',
+        globals: true,
+        setupFiles: ['./resources/js/test/setup.ts'],
+        include: ['resources/js/**/*.test.ts', 'resources/js/**/*.test.tsx'],
+    },
     plugins: lazyPlugins(() => [
         laravel({
             input: ['resources/css/app.css', 'resources/js/app.tsx'],
@@ -68,6 +74,14 @@ export default defineConfig({
             'composer.json',
             'resources/js/components/ui/*',
             'resources/views/mail/*',
+            // The specification is not source code: the catalogue is laid
+            // out by hand and code comments cite it by its wording.
+            'docs/**',
+            '*.md',
+            'test-results/**',
+            'playwright-report/**',
+            // The starter kit ships this fully annotated; leave it alone.
+            'tsconfig.json',
         ],
         sortTailwindcss: {
             functions: ['clsx', 'cn', 'cva'],
