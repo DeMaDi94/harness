@@ -1,5 +1,7 @@
 <?php
 
+use App\Domain\Users\Role;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -44,9 +46,24 @@ expect()->extend('toBeOne', function () {
 |
 */
 
-function something()
+/**
+ * A user holding the admin role (B13).
+ *
+ * @param  array<string, mixed>  $attributes
+ */
+function admin(array $attributes = []): User
 {
-    // ..
+    return User::factory()->withRole(Role::Admin)->create($attributes);
+}
+
+/**
+ * A user holding the plain user role (B13).
+ *
+ * @param  array<string, mixed>  $attributes
+ */
+function member(array $attributes = []): User
+{
+    return User::factory()->withRole(Role::User)->create($attributes);
 }
 
 /**

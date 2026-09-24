@@ -14,13 +14,19 @@ namespace column — do not invent an area name.
 
 | Prefix | Area | PHP namespace | Frontend folder |
 | --- | --- | --- | --- |
-| | _filled by the `start-project` skill_ | | |
+| — | User management — a blueprint area (B13–B16), not in the catalogue | `Users` | `features/users` |
+| | _the product's areas: filled by the `start-project` skill_ | | |
 
 ## Core entities
 
 | Domain term | Code | Notes |
 | --- | --- | --- |
 | | | What it is, and the confusable neighbour it is *not*. |
+| Benutzer (user) | `User` | An account that can sign in. Also the name of the plain role — the enum case `Role::User`. |
+| Rolle (role) | `Role` | What a user is, exactly one per user (B13). Not a permission: code never checks a role. |
+| Berechtigung (permission) | `Permission` | What a role allows, e.g. `users.view`. The only thing code checks. |
+| Gelöschter Benutzer | soft-deleted `User` (`trashed()`) | Deleted, but restorable (B15). Not a permanently removed row. |
+| Einladung (invitation) | `UserInvitation` | The mail a new user sets their password through (B14). Not the password-reset mail. |
 
 ## Terms of art that stay untranslated
 
@@ -36,3 +42,5 @@ Enum **cases** are English; their stored value is the wire format; their label i
 
 | Enum | Case | Stored value | Label key |
 | --- | --- | --- | --- |
+| `Role` | `Admin` | `admin` | `Admin` — de „Administrator“ |
+| `Role` | `User` | `user` | `User` — de „Benutzer“ |

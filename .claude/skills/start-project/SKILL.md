@@ -83,8 +83,9 @@ Fill `docs/GLOSSARY.md`:
 ## 5. Decisions
 
 In `docs/DECISIONS.md`, keep the blueprint's decisions (`B*`) that still hold and record the
-project's first ones (`D1`, `D2`, …): production database, hosting, auth changes (registration on
-or off, roles), external services. Every open question from step 2 goes under „Still open“.
+project's first ones (`D1`, `D2`, …): production database, hosting, auth changes (the blueprint
+has no self-registration and ships the `admin`/`user` roles — B13, B14; say if the product differs),
+external services. Every open question from step 2 goes under „Still open“.
 
 ## 6. Locales
 

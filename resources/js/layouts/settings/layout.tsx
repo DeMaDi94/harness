@@ -1,4 +1,4 @@
-import { Link } from '@inertiajs/react';
+import { Link, usePage } from '@inertiajs/react';
 import type { PropsWithChildren } from 'react';
 import { PageTitle } from '@/components/core/page-title';
 import { useCurrentUrl } from '@/hooks/use-current-url';
@@ -8,9 +8,10 @@ import { cn, toUrl } from '@/lib/utils';
 import { edit as editAppearance } from '@/routes/appearance';
 import { edit } from '@/routes/profile';
 import { edit as editSecurity } from '@/routes/security';
+import { index as users } from '@/routes/users';
 import type { NavItem } from '@/types';
 
-const sidebarNavItems: NavItem[] = [
+const accountNavItems: NavItem[] = [
     {
         title: i18nKey('Profile'),
         href: edit(),
@@ -28,14 +29,28 @@ const sidebarNavItems: NavItem[] = [
     },
 ];
 
+/* B13 — shown only to whoever may see the user list. */
+const usersNavItem: NavItem = {
+    title: i18nKey('Users'),
+    href: users(),
+    icon: null,
+};
+
 /*
  * The account settings: a title, a short list of sections beside the form —
  * marked the way the navigation rail marks its entries — and the form itself
- * at a readable width.
+ * at a readable width. A list (`wide`) takes the whole row instead.
  */
-export default function SettingsLayout({ children }: PropsWithChildren) {
+export default function SettingsLayout({
+    children,
+    wide = false,
+}: PropsWithChildren<{ wide?: boolean }>) {
     const { isCurrentOrParentUrl } = useCurrentUrl();
     const { t } = useTranslation();
+    const { auth } = usePage().props;
+    const sidebarNavItems = auth.permissions.includes('users.view')
+        ? [...accountNavItems, usersNavItem]
+        : accountNavItems;
 
     return (
         <>
@@ -72,8 +87,8 @@ export default function SettingsLayout({ children }: PropsWithChildren) {
                     </nav>
                 </aside>
 
-                <div className="min-w-0 flex-1 md:max-w-2xl">
-                    <section className="max-w-xl space-y-12">
+                <div className={cn('min-w-0 flex-1', !wide && 'md:max-w-2xl')}>
+                    <section className={cn('space-y-12', !wide && 'max-w-xl')}>
                         {children}
                     </section>
                 </div>

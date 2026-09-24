@@ -22,8 +22,11 @@ class ResetUserPassword implements ResetsUserPasswords
             'password' => $this->passwordRules(),
         ])->validate();
 
+        // B14 — the link arrived at this address, so using it proves the
+        // address: an invited user needs no second verification mail.
         $user->forceFill([
             'password' => $input['password'],
+            'email_verified_at' => $user->email_verified_at ?? now(),
         ])->save();
     }
 }

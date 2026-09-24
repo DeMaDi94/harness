@@ -41,6 +41,9 @@ class HandleInertiaRequests extends Middleware
             'name' => config('app.name'),
             'auth' => [
                 'user' => $request->user(),
+                /* B13 — what the signed-in user may do; the screens check
+                   permissions, never role names. */
+                'permissions' => $request->user()?->getAllPermissions()->pluck('name')->values()->all() ?? [],
             ],
             'locale' => app()->getLocale(),
             'locales' => config('app.locales'),

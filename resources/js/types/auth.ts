@@ -12,6 +12,8 @@ export type User = {
 
 export type Auth = {
     user: User;
+    /** B13 — the signed-in user's permissions; screens check these, never a role. */
+    permissions: string[];
 };
 
 export type Passkey = {

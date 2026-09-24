@@ -52,6 +52,7 @@ class ProfileController extends Controller
 
         Auth::logout();
 
+        // B15 — a soft delete: an admin can restore the account.
         $user->delete();
 
         $request->session()->invalidate();

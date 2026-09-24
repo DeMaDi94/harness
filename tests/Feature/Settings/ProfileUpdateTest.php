@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Settings;
 
+use App\Domain\Users\Role;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -76,7 +77,27 @@ class ProfileUpdateTest extends TestCase
             ->assertRedirect(route('home'));
 
         $this->assertGuest();
-        $this->assertNull($user->fresh());
+        // B15 — a soft delete: an admin can restore the account.
+        $this->assertSoftDeleted($user);
+    }
+
+    public function test_the_last_admin_cannot_delete_their_account()
+    {
+        // B15 — the last active admin cannot delete their own account.
+        $user = User::factory()->withRole(Role::Admin)->create();
+
+        $response = $this
+            ->actingAs($user)
+            ->from(route('profile.edit'))
+            ->delete(route('profile.destroy'), [
+                'password' => 'password',
+            ]);
+
+        $response
+            ->assertSessionHasErrors(['account' => __('The last admin cannot be deleted or lose the admin role.')])
+            ->assertRedirect(route('profile.edit'));
+
+        $this->assertNotSoftDeleted($user);
     }
 
     public function test_correct_password_must_be_provided_to_delete_account()

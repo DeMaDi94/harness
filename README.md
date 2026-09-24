@@ -21,7 +21,9 @@ composer setup     # install, generate key, migrate + seed, build
 composer dev       # serve + queue + Vite on http://localhost:8000
 ```
 
-Log in as `test@example.com` / `password` (seeded by `php artisan migrate:fresh --seed`).
+Log in as `test@example.com` (admin) or `user@example.com`, password `password` (seeded by
+`php artisan migrate:fresh --seed`). There is no self-registration: admins create accounts under
+Settings → Users, and `php artisan users:create-admin` creates the first admin of an installation.
 `/_primitives` (outside production) shows every core UI primitive in the real shell.
 
 Requires PHP 8.5, Node 22, Composer 2 and `jq` (for the Claude hooks). See

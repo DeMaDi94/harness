@@ -43,7 +43,8 @@ npm run test:e2e          # Playwright, boots its own server
 php artisan spec:index    # read docs/REQUIREMENTS.md into the status ledger
 php artisan spec:coverage # the traceability gate; rewrites docs/spec/COVERAGE.md
 
-php artisan migrate:fresh --seed   # reset; dev login test@example.com / password
+php artisan migrate:fresh --seed   # reset; dev login test@example.com (admin) or user@example.com, password `password`
+php artisan users:create-admin     # the first admin of an installation (B14)
 ```
 
 Run the gates through the scripts, never `npx eslint` / `npx vitest` — this project has neither.

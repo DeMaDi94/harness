@@ -23,6 +23,7 @@ on macOS / darwin 25.3.0.
 | `laravel/framework` | v13.33.0 | Slim skeleton: `bootstrap/app.php`, no `Http/Kernel.php` |
 | `inertiajs/inertia-laravel` | v3.3.4 | Inertia **3** — `Inertia::once()`, `Inertia::flash()` |
 | `laravel/fortify` | v1.40.0 | Starter-kit auth — decision B2 |
+| `spatie/laravel-permission` | v8.3.0 | Roles and permissions — decision B13 |
 | `laravel/wayfinder` | v0.1.21 | Generates typed TS route helpers from the PHP routes |
 | `pestphp/pest` | v5.2.1 | With `pest-plugin-laravel` and `pest-plugin-drift` |
 | `larastan/larastan` | v3.12.2 | Level 7, no baseline — decision B11 |
@@ -92,3 +93,4 @@ hook refuses them.
 | `npm run test` | Frontend unit tests |
 | `npm run test:e2e` | Playwright, boots its own server |
 | `php artisan migrate:fresh --seed` | Reset the database |
+| `php artisan users:create-admin` | Create an admin and send the invitation — the first one of an installation (B14) |
