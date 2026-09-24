@@ -14,7 +14,7 @@ declare module '@inertiajs/core' {
             locale: string;
             locales: string[];
             i18n: Record<string, string>;
-            sidebarOpen: boolean;
+            navCollapsed: boolean;
             [key: string]: unknown;
         };
     }

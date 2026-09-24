@@ -22,7 +22,7 @@ export default function AppearanceToggleTab({
     return (
         <div
             className={cn(
-                'inline-flex gap-1 rounded-lg bg-neutral-100 p-1 dark:bg-neutral-800',
+                'inline-flex gap-1 rounded-brand border border-brand-line bg-brand-rail p-1',
                 className,
             )}
             {...props}
@@ -32,10 +32,10 @@ export default function AppearanceToggleTab({
                     key={value}
                     onClick={() => updateAppearance(value)}
                     className={cn(
-                        'flex items-center rounded-md px-3.5 py-1.5 transition-colors',
+                        'flex items-center rounded-brand border px-3.5 py-1.5 transition-colors outline-none focus-visible:shadow-focus',
                         appearance === value
-                            ? 'bg-white shadow-xs dark:bg-neutral-700 dark:text-neutral-100'
-                            : 'text-neutral-500 hover:bg-neutral-200/60 hover:text-black dark:text-neutral-400 dark:hover:bg-neutral-700/60',
+                            ? 'border-brand-line bg-brand-card font-medium text-brand-ink'
+                            : 'border-transparent text-brand-muted hover:bg-brand-hover hover:text-brand-ink',
                     )}
                 >
                     <Icon className="-ml-1 h-4 w-4" />

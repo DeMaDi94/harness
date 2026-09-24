@@ -19,8 +19,17 @@ export default defineConfig({
             input: ['resources/css/app.css', 'resources/js/app.tsx'],
             refresh: true,
             fonts: [
-                bunny('Instrument Sans', {
-                    weights: [400, 500, 600],
+                // The three faces of the house style (B8): Space Grotesk carries
+                // the interface, IBM Plex Mono every figure column, Silkscreen
+                // the small upper-case labels and badges.
+                bunny('Space Grotesk', {
+                    weights: [400, 500, 600, 700],
+                }),
+                bunny('IBM Plex Mono', {
+                    weights: [400, 500],
+                }),
+                bunny('Silkscreen', {
+                    weights: [400],
                 }),
             ],
         }),

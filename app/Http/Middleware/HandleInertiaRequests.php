@@ -49,7 +49,10 @@ class HandleInertiaRequests extends Middleware
                the file, so a switch or an edited translation is fetched again. */
             'i18n' => Inertia::once(fn (): array => $this->translations())
                 ->as('i18n.'.app()->getLocale().'.'.$this->translationsVersion()),
-            'sidebarOpen' => ! $request->hasCookie('sidebar_state') || $request->cookie('sidebar_state') === 'true',
+            /* The folded navigation rail is remembered in a cookie rather
+               than localStorage, so the server-rendered markup already has it
+               and the rail does not unfold and snap shut. */
+            'navCollapsed' => $request->cookie('nav_collapsed') === '1',
         ];
     }
 

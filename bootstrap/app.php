@@ -16,7 +16,7 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
-        $middleware->encryptCookies(except: ['appearance', 'locale', 'sidebar_state']);
+        $middleware->encryptCookies(except: ['appearance', 'locale', 'nav_collapsed']);
 
         $middleware->web(append: [
             HandleLocale::class,

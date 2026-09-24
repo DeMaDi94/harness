@@ -1,8 +1,6 @@
 import { Link } from '@inertiajs/react';
 import type { PropsWithChildren } from 'react';
-import Heading from '@/components/heading';
-import { Button } from '@/components/ui/button';
-import { Separator } from '@/components/ui/separator';
+import { PageTitle } from '@/components/core/page-title';
 import { useCurrentUrl } from '@/hooks/use-current-url';
 import { useTranslation } from '@/hooks/use-translation';
 import { i18nKey } from '@/lib/i18n';
@@ -30,52 +28,56 @@ const sidebarNavItems: NavItem[] = [
     },
 ];
 
+/*
+ * The account settings: a title, a short list of sections beside the form —
+ * marked the way the navigation rail marks its entries — and the form itself
+ * at a readable width.
+ */
 export default function SettingsLayout({ children }: PropsWithChildren) {
     const { isCurrentOrParentUrl } = useCurrentUrl();
     const { t } = useTranslation();
 
     return (
-        <div className="px-4 py-6">
-            <Heading
+        <>
+            <PageTitle
                 title={t('Settings')}
                 description={t('Manage your profile and account settings')}
             />
 
-            <div className="flex flex-col lg:flex-row lg:space-x-12">
-                <aside className="w-full max-w-xl lg:w-48">
+            <div className="flex flex-col gap-6 lg:flex-row lg:gap-12">
+                <aside className="w-full lg:w-48">
                     <nav
-                        className="flex flex-col space-y-1 space-x-0"
+                        className="flex gap-1 overflow-x-auto lg:flex-col"
                         aria-label={t('Settings')}
                     >
-                        {sidebarNavItems.map((item, index) => (
-                            <Button
-                                key={`${toUrl(item.href)}-${index}`}
-                                size="sm"
-                                variant="ghost"
-                                asChild
-                                className={cn('w-full justify-start', {
-                                    'bg-muted': isCurrentOrParentUrl(item.href),
-                                })}
-                            >
-                                <Link href={item.href}>
-                                    {item.icon && (
-                                        <item.icon className="h-4 w-4" />
+                        {sidebarNavItems.map((item, index) => {
+                            const active = isCurrentOrParentUrl(item.href);
+
+                            return (
+                                <Link
+                                    key={`${toUrl(item.href)}-${index}`}
+                                    href={item.href}
+                                    aria-current={active ? 'page' : undefined}
+                                    className={cn(
+                                        'flex h-9 flex-none items-center rounded-brand px-3 text-sm whitespace-nowrap outline-none focus-visible:shadow-focus',
+                                        active
+                                            ? 'bg-brand-accent-soft font-semibold text-brand-accent-ink'
+                                            : 'font-medium text-brand-ink-soft hover:bg-brand-hover hover:text-brand-ink',
                                     )}
+                                >
                                     {t(item.title)}
                                 </Link>
-                            </Button>
-                        ))}
+                            );
+                        })}
                     </nav>
                 </aside>
 
-                <Separator className="my-6 lg:hidden" />
-
-                <div className="flex-1 md:max-w-2xl">
+                <div className="min-w-0 flex-1 md:max-w-2xl">
                     <section className="max-w-xl space-y-12">
                         {children}
                     </section>
                 </div>
             </div>
-        </div>
+        </>
     );
 }

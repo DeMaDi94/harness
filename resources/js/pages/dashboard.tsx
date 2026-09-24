@@ -1,26 +1,39 @@
 import { Head } from '@inertiajs/react';
+import { PageTitle } from '@/components/core/page-title';
+import { Panel } from '@/components/core/panel';
 import { PlaceholderPattern } from '@/components/ui/placeholder-pattern';
+import { useTranslation } from '@/hooks/use-translation';
+import { i18nKey } from '@/lib/i18n';
 import { dashboard } from '@/routes';
 
+/*
+ * The blueprint's only screen: the page a signed-in user lands on. The
+ * panels are placeholders in the house style until a product gives the
+ * dashboard its requirements.
+ */
 export default function Dashboard() {
+    const { t } = useTranslation();
+
     return (
         <>
-            <Head title="Dashboard" />
-            <div className="flex h-full flex-1 flex-col gap-4 overflow-x-auto rounded-xl p-4">
+            <Head title={t('Dashboard')} />
+
+            <PageTitle title={t('Dashboard')} />
+
+            <div className="flex flex-col gap-4">
                 <div className="grid auto-rows-min gap-4 md:grid-cols-3">
-                    <div className="relative aspect-video overflow-hidden rounded-xl border border-sidebar-border/70 dark:border-sidebar-border">
-                        <PlaceholderPattern className="absolute inset-0 size-full stroke-neutral-900/20 dark:stroke-neutral-100/20" />
-                    </div>
-                    <div className="relative aspect-video overflow-hidden rounded-xl border border-sidebar-border/70 dark:border-sidebar-border">
-                        <PlaceholderPattern className="absolute inset-0 size-full stroke-neutral-900/20 dark:stroke-neutral-100/20" />
-                    </div>
-                    <div className="relative aspect-video overflow-hidden rounded-xl border border-sidebar-border/70 dark:border-sidebar-border">
-                        <PlaceholderPattern className="absolute inset-0 size-full stroke-neutral-900/20 dark:stroke-neutral-100/20" />
-                    </div>
+                    {[1, 2, 3].map((each) => (
+                        <Panel
+                            key={each}
+                            className="relative aspect-video overflow-hidden"
+                        >
+                            <PlaceholderPattern className="absolute inset-0 size-full stroke-brand-line" />
+                        </Panel>
+                    ))}
                 </div>
-                <div className="relative min-h-[100vh] flex-1 overflow-hidden rounded-xl border border-sidebar-border/70 md:min-h-min dark:border-sidebar-border">
-                    <PlaceholderPattern className="absolute inset-0 size-full stroke-neutral-900/20 dark:stroke-neutral-100/20" />
-                </div>
+                <Panel className="relative min-h-[60vh] overflow-hidden">
+                    <PlaceholderPattern className="absolute inset-0 size-full stroke-brand-line" />
+                </Panel>
             </div>
         </>
     );
@@ -29,7 +42,7 @@ export default function Dashboard() {
 Dashboard.layout = {
     breadcrumbs: [
         {
-            title: 'Dashboard',
+            title: i18nKey('Dashboard'),
             href: dashboard(),
         },
     ],
