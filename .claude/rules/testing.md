@@ -54,7 +54,7 @@ proves fidelity instead of asserting your own reading:
 ```php
 it('matches the reference rounding', function (array $case) {
     expect(Rounding::of($case['in']))->toBe($case['out']);
-})->with(fixture('rounding'));
+})->with(goldenVectors('rounding'));
 ```
 
 Real inputs beat invented ones.

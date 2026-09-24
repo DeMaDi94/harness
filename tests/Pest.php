@@ -48,3 +48,25 @@ function something()
 {
     // ..
 }
+
+/**
+ * A golden-vector dataset: `tests/Fixtures/{name}.json`, shaped
+ * `{"cases": [{…}, …]}` — reference answers the business already trusts,
+ * frozen so a rule is checked against them rather than against invented
+ * inputs (.claude/rules/testing.md). Each case reaches the test as one array,
+ * so the fixture can grow a field without touching every signature.
+ *
+ *     it('matches the reference rounding', function (array $case) { … })
+ *         ->with(goldenVectors('rounding'));
+ *
+ * @return array<int, array{array<string, mixed>}>
+ */
+function goldenVectors(string $name): array
+{
+    $file = __DIR__."/Fixtures/{$name}.json";
+
+    /** @var array{cases: list<array<string, mixed>>} $vectors */
+    $vectors = json_decode((string) file_get_contents($file), true, 512, JSON_THROW_ON_ERROR);
+
+    return array_map(static fn (array $case): array => [$case], $vectors['cases']);
+}
