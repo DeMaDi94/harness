@@ -20,6 +20,10 @@ paths:
 - Prefer a PHPDoc block over inline comments. An inline comment earns its place only for a
   non-obvious *why* — most often, which requirement or decision a value comes from.
 - User-facing strings go through `__('…')` — see `.claude/rules/i18n.md`.
+- PHP 8.4/8.5 idioms where no Collection is in play: `array_find`, `array_find_key`, `array_any`,
+  `array_all`, `array_first`, `array_last`; `new Foo()->bar()` without wrapping parentheses; the
+  pipe operator `|>` over nested calls; `clone($readonly, ['prop' => $value])` to derive a changed
+  readonly value object — the natural shape for a domain value in `app/Domain`.
 - Style is Laravel's Pint preset, applied automatically after every edit and checked by the Stop
   gate. Do not hand-format.
 

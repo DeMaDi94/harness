@@ -79,3 +79,22 @@ The live gallery of all of them is `/_primitives` (local only). Add a new primit
   as the PHP. An unpinned second implementation of a rule is how the two sides start disagreeing.
 - **No new dependency without approval**, and check first: `sonner`, `@dnd-kit/*`, `date-fns` and
   the shadcn components in `components/ui` are already installed. See `docs/STACK.md`.
+
+## Version traps — Inertia 3, Wayfinder, Tailwind 4
+
+Knowledge of older versions produces code that looks right and fails. Adapted from the Boost
+guidelines the packages ship (MIT); the full reference is the `inertia-react-development` skill.
+
+- **Inertia 3:** `Inertia::lazy()` is gone — `Inertia::optional()`. Axios is gone — the built-in
+  client. `router.cancel()` → `router.cancelAll()`. Events renamed: `invalid` → `httpException`,
+  `exception` → `networkError`. No `future` config. `optional()`/`defer()`/`merge()` work on
+  dot-notation paths inside nested props. A deferred prop renders a skeleton while it loads.
+- **Wayfinder, never a hardcoded URL.** An invokable controller is a default import from
+  `@/actions/App/Http/{Area}/{Action}/{Action}Controller` (`<Form {...StoreUserController.form()}>`,
+  `StoreUserController.url()`); named routes come from `@/routes/{name}` (`edit(user)`). The Vite
+  plugin regenerates both — do not hand-edit `resources/js/actions` or `resources/js/routes`.
+- **Tailwind 4:** CSS-first — tokens live in `@theme` in `resources/css/`; there is no
+  `tailwind.config.js`, no `@tailwind` directive, no `corePlugins`. Removed utilities:
+  `*-opacity-*` → the `/` modifier (`bg-brand-ink/50`), `flex-shrink-*` → `shrink-*`,
+  `flex-grow-*` → `grow-*`, `overflow-ellipsis` → `text-ellipsis`, `decoration-slice|clone` →
+  `box-decoration-slice|clone`. Space siblings with `gap-*`, not margins.

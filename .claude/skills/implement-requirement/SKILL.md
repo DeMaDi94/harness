@@ -25,7 +25,9 @@ touches in `docs/DECISIONS.md`.
 
 List every value, label, ordering, limit and edge case the implementation needs, and mark where
 each one comes from. Anything that is not stated in a requirement or a decision is a **question
-for the user**, not a gap to fill with something plausible. Ask them together, in one round.
+for the user**, not a gap to fill with something plausible. Ask them together, in one round —
+the `grilling` skill runs that round (each question with your recommended answer; facts you look
+up yourself, decisions go to the user). For a term the glossary lacks, `domain-modeling`.
 
 The user's answers go on record before the code is written:
 
@@ -83,6 +85,10 @@ output), freeze it in `tests/Fixtures/` and run the rule against it as a dataset
 Assert UI text **only** against wording you have read in the requirement or the translation file.
 Copying an expectation out of your own implementation proves nothing.
 
+For a larger slice, delegate the write-run-iterate loop to the `test-author` agent with the ids —
+it derives expectations from the requirement, not from your code. `tdd` is the skill for working
+test-first.
+
 ## 6. Update the status ledger
 
 Edit `docs/spec/status.txt` in the same change:
@@ -107,7 +113,16 @@ npm run test:e2e     # if the requirement is a user workflow
 ```
 
 The Stop gate re-runs the static half over your changed files and blocks on failure. Tests it does
-not run — run them yourself.
+not run — run them yourself. A failing gate whose dump would swamp this session → the `gate-fixer`
+agent.
+
+## 8. Review
+
+For anything beyond a one-line rule, hand the diff and the ids to the `reviewer` agent — it checks
+what no gate can: fidelity to the requirement, invented values across the whole change,
+authorization, props exposure, test honesty. Treat its findings per `receiving-code-review`: verify
+each against the code and the spec, fix the real ones, and bring anything the spec does not settle
+to the user as a question.
 
 ## Report
 

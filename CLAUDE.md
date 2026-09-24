@@ -45,6 +45,10 @@ php artisan spec:coverage # the traceability gate; rewrites docs/spec/COVERAGE.m
 
 php artisan migrate:fresh --seed   # reset; dev login test@example.com (admin) or user@example.com, password `password`
 php artisan users:create-admin     # the first admin of an installation (B14)
+
+php artisan route:list --path=users              # a route's name, action and middleware
+php artisan config:show app.locales              # a resolved config value
+php artisan tinker --execute 'echo User::count();'   # single quotes outside, so $ and " survive the shell
 ```
 
 Run the gates through the scripts, never `npx eslint` / `npx vitest` — this project has neither.
@@ -210,6 +214,24 @@ These load automatically when a matching file is touched, so they are not repeat
 | `start-project` | Once, on a fresh copy: name the product, draft the catalogue with the user, glossary, decisions, locales |
 | `implement-requirement` | The repeated task: take requirement ids to done, ledger included |
 | `create-screen` | Scaffold an Inertia screen — controller, route, page, props, translations, tests |
+
+Reference and workflow skills load on demand from their descriptions — the full list is in
+`.claude/README.md`. The ones worth reaching for by name: `grilling` (a question round before
+building), `domain-modeling` (glossary and decisions), `diagnosing-bugs`, `tdd`,
+`receiving-code-review`, `finishing-a-development-branch`, and the stack references
+`laravel-best-practices`, `testing-best-practices`, `inertia-react-development`,
+`fortify-development`, `laravel-permission-development`.
+
+## Agents
+
+Subagents in `.claude/agents/` do the work in their own context and hand back only a report.
+
+| Agent | For | Model |
+| --- | --- | --- |
+| `explorer` | Locating code, mapping an area — read-only | sonnet |
+| `reviewer` | Diff review for what no gate sees: requirement fidelity, invented values, authorization, props exposure, test honesty — read-only | opus |
+| `gate-fixer` | Taking a failing gate back to green without gaming it | sonnet |
+| `test-author` | Writing tests from the requirement, not the implementation | sonnet |
 
 ## Automated gates
 

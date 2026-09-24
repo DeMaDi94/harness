@@ -74,6 +74,11 @@ $this->get(route('projects.show', $project))
         ->has('project.tasks', 3));
 ```
 
+Use the named assertions — `assertOk()`, `assertForbidden()`, `assertNotFound()`,
+`assertRedirect()`, `assertInvalid()` — not `assertStatus(…)`; the failure message says what was
+expected. Pest's helpers are functions: `use function Pest\Laravel\{actingAs, mock};`. The
+`testing-best-practices` skill has the fuller reference.
+
 ## End-to-end traps
 
 - `getByLabel` matches a **substring**, so „Name“ also matches a „Delete name“ button. Pass
@@ -96,6 +101,7 @@ $this->get(route('projects.show', $project))
 - Do not assert on UI text you have not read in the requirement or the translation file. Copying
   an expectation out of your own implementation proves nothing.
 - Do not use `page.waitForTimeout()` in Playwright. Wait for a condition.
+- Do not delete or skip a failing test to get green. Either the code or the test is wrong — say which.
 - Do not write a throwaway verification script when a test proves the same thing.
 - Do not mark a requirement `done` because its test passes if the rule is not actually wired into
   the app — that is `in-progress`.
